@@ -37,7 +37,7 @@ const Datagrid = (props) => {
         getRowClassName={(params) => `MuiDataGrid-cell--${params.row.id}`}
         rowsPerPageOptions={[5]}
         pageSize={5}
-        page={context.id ? 0 : Number(context.page)}
+        page={Number(context.page)}
         onPageChange={(page) => setContext({ ...context, page: page })}
       />
     </Box>

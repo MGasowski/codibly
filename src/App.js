@@ -11,19 +11,27 @@ function App() {
   const [searchParams] = useSearchParams();
   const [context, setContext] = useState({
     id: searchParams.get("id"),
-    page: searchParams.get("page"),
+    page: searchParams.get("page") ? searchParams.get("page") : 0,
   });
 
-  useEffect(() => {
-    setContext({ ...context, page: 0 });
-    const id = context.id !== "" ? `id=${context.id}` : "";
-    navigate(`/?${id}`);
-  }, [context.id]);
+  // useEffect(() => {
+  //   setContext({ ...context, page: 0 });
+  //   const id = context.id !== "" ? `id=${context.id}` : "";
+  //   navigate(`/?${id}`);
+  // }, [context.id]);
+
+  // useEffect(() => {
+  //   setContext({ ...context, id: "" });
+  //   navigate(`/?page=${context.page}`);
+  // }, [context.page]);
 
   useEffect(() => {
-    setContext({ ...context, id: "" });
-    navigate(`/?page=${context.page}`);
-  }, [context.page]);
+    const search =
+      context.id && context.id !== ""
+        ? `?id=${context.id}`
+        : `?page=${context.page}`;
+    navigate({ pathname: `/`, search: search });
+  }, [context]);
 
   const { loading, error, data } = useApi(
     `https://reqres.in/api/products?per_page=12`

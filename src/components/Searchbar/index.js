@@ -15,7 +15,7 @@ const Searchbar = (props) => {
         label="Find with id"
         variant="outlined"
         onChange={handleChange}
-        value={context.id}
+        value={context.id ? context.id : ""}
         fullWidth
         sx={{ marginBottom: 3, boxShadow: 3 }}
       />
