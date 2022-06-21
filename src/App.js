@@ -14,17 +14,6 @@ function App() {
     page: searchParams.get("page") ? searchParams.get("page") : 0,
   });
 
-  // useEffect(() => {
-  //   setContext({ ...context, page: 0 });
-  //   const id = context.id !== "" ? `id=${context.id}` : "";
-  //   navigate(`/?${id}`);
-  // }, [context.id]);
-
-  // useEffect(() => {
-  //   setContext({ ...context, id: "" });
-  //   navigate(`/?page=${context.page}`);
-  // }, [context.page]);
-
   useEffect(() => {
     const search =
       context.id && context.id !== ""
