@@ -1,15 +1,6 @@
+import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
-
-const mock = [
-  { id: 1, col1: "Hello", col2: "World" },
-  { id: 2, col1: "XGrid", col2: "is Awesome" },
-  { id: 3, col1: "Material-UI", col2: "is Amazing" },
-  { id: 4, col1: "Hello", col2: "World" },
-  { id: 5, col1: "XGrid", col2: "is Awesome" },
-  { id: 6, col1: "Material-UI", col2: "is Amazing" },
-];
 
 const columns = [
   { field: "id", flex: 0.3 },
@@ -22,17 +13,26 @@ const Datagrid = (props) => {
     ? props.data.filter((el) => el.id == props.filter)
     : props.data;
 
+  const sx = {};
+  data &&
+    data.forEach(
+      (el) =>
+        (sx[`.MuiDataGrid-cell--${el.id}`] = { backgroundColor: el.color })
+    );
+  if (!data) return <CircularProgress />;
   return (
     <Box sx={{}}>
       <DataGrid
         autoHeight
-        rows={props.data ? data : mock}
+        rows={data}
         columns={columns}
-        sx={{ boxShadow: 3 }}
-        //   getRowClassName={(params) => `background: ${params.row.color}`}
+        sx={{
+          boxShadow: 3,
+          ...sx,
+        }}
+        getRowClassName={(params) => `MuiDataGrid-cell--${params.row.id}`}
         rowsPerPageOptions={[5]}
         pageSize={5}
-        getRowClassName={(params) => ""}
       />
     </Box>
   );
