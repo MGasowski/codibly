@@ -1,6 +1,8 @@
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
+import { useContext } from "react";
+import { QueryContext } from "../../context/queriesContext";
 
 const columns = [
   { field: "id", flex: 0.3 },
@@ -9,8 +11,10 @@ const columns = [
 ];
 
 const Datagrid = (props) => {
-  const data = props.filter
-    ? props.data.filter((el) => el.id == props.filter)
+  const [context, setContext] = useContext(QueryContext);
+
+  const data = context.id
+    ? props.data?.filter((el) => el.id == context.id)
     : props.data;
 
   const sx = {};
@@ -33,6 +37,8 @@ const Datagrid = (props) => {
         getRowClassName={(params) => `MuiDataGrid-cell--${params.row.id}`}
         rowsPerPageOptions={[5]}
         pageSize={5}
+        page={context.id ? 0 : Number(context.page)}
+        onPageChange={(page) => setContext({ ...context, page: page })}
       />
     </Box>
   );

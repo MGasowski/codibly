@@ -1,12 +1,13 @@
 import { TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { QueryContext } from "../../context/queriesContext";
 
 const Searchbar = (props) => {
-  const [value, setValue] = useState("");
+  const [context, setContext] = useContext(QueryContext);
+
   const handleChange = (e) => {
     if (/^\d+$/.test(e.target.value) || e.target.value === "")
-      setValue(e.target.value);
-    props.onChange(e.target.value);
+      setContext({ ...context, id: e.target.value });
   };
   return (
     <>
@@ -14,7 +15,7 @@ const Searchbar = (props) => {
         label="Find with id"
         variant="outlined"
         onChange={handleChange}
-        value={value}
+        value={context.id}
         fullWidth
         sx={{ marginBottom: 3, boxShadow: 3 }}
       />
